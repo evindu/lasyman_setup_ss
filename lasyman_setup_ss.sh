@@ -232,7 +232,7 @@ function setup_sspanel()
 	PANEL_ROOT=/root/ss-panel
 	echo -e "download ss-panel ...\n"
 	cd /root
-	git clone https://github.com/orvice/ss-panel/tree/v2.git
+	git clone https://github.com/evindu/ss-panel.git
 	#import pannel sql
 	for mysql in ${SQL_FILES}
 	do
