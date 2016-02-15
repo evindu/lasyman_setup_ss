@@ -205,7 +205,7 @@ function setup_manyuser_ss()
 	SS_ROOT=/root/shadowsocks/shadowsocks
 	echo -e "download manyuser shadowsocks\n"
 	cd /root
-	git clone -b manyuser https://github.com/mengskysama/shadowsocks.git
+	git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
 	cd ${SS_ROOT}
 	#modify Config.py
 	echo -e "modify Config.py...\n"
@@ -226,29 +226,6 @@ function setup_manyuser_ss()
 	mysql_op "${import_db_sql}"
 }
 
-#setup ss-panel 
-function setup_sspanel()
-{
-	PANEL_ROOT=/root/ss-panel
-	echo -e "download ss-panel ...\n"
-	cd /root
-	git clone https://github.com/evindu/ss-panel.git
-	#import pannel sql
-	for mysql in ${SQL_FILES}
-	do
-		import_panel_sql="source ${PANEL_ROOT}/sql/${mysql}"
-		mysql_op "${import_panel_sql}"
-	done
-	#modify config
-	echo -e "modify lib/config-simple.php...\n"
-	if [ -f "${PANEL_ROOT}/lib/config-simple.php" ];then
-		mv ${PANEL_ROOT}/lib/config-simple.php ${PANEL_ROOT}/lib/config.php
-	fi
-	sed -i "/DB_PWD/ s#'password'#'${ROOT_PASSWD}'#" ${PANEL_ROOT}/lib/config.php
-	sed -i "/DB_DBNAME/ s#'db'#'${DB_NAME}'#" ${PANEL_ROOT}/lib/config.php
-	cp -rd ${PANEL_ROOT}/* /var/www/html/
-	rm -rf /var/www/html/index.html
-}
 
 #start shadowsocks server
 function start_ss()
